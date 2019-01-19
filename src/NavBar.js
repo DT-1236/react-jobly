@@ -10,6 +10,8 @@ const StyledNav = styled.nav`
   justify-content: space-between;
   background-color: #4682B4;
   font-size: 105%;
+  position: fixed;
+  z-index: 1;
   box-shadow 1px 1px 18px #4683b451;
 `;
 

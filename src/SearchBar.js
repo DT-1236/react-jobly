@@ -2,21 +2,34 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const StyledSearchBar = styled.div`
-  margin-top: 50px;
+  /* margin-top: 50px; */
+  /* height: 1000px; */
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   width: 100%;
+  height: 100vw;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
 `;
 
 const StyledForm = styled.form`
   display: flex;
-  width: 100%;
+  position: fixed;
+  top: 5vw;
+  width: 80vw;
   height: 45px;
   margin: 10px 0px;
+  justify-content: space-between;
 `;
 
 const StyledInput = styled.input`
   font-size: 125%;
-  padding-left: 15px;
-  width: 100%;
+  box-sizing: border-box;
+  width: 85%;
   border: 1px solid gray;
   border-radius: 5px 0px 0px 5px;
   outline: none;
@@ -24,7 +37,9 @@ const StyledInput = styled.input`
 
 const StyledButton = styled.button`
   font-size: 125%
-  width: 100px;
+  /* width: 100px; */
+  width: 15%;
+  box-sizing: border-box;
   background-color: #20B2AA;
   border-radius: 0px 5px 5px 0;
   border: 1px solid gray;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import Navbar from './NavBar';
 import ResourceList from './ResourceList';
 import CompanyDetail from './CompanyDetail';
@@ -8,33 +8,19 @@ import AuthForm from './AuthForm';
 import HomePage from './HomePage';
 import Profile from './Profile';
 import JoblyApi from './JoblyApi';
-import bgimg from './sfdowntown.jpg';
-
-const StyledContainer = styled.div`
-  height: calc(100vh - 50px);
-  color: black;
-
-  &::after {
-    content: '';
-    background: url(${bgimg});
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    opacity: 0.3;
-    top: 50px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;
-  }
-`;
-
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 // import Company from './Company';
 
 // JSX including ProtectedRoute must be given spread props
+
+const StyledContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  top: 40px;
+`;
+
 class ProtectedRoute extends Component {
   render() {
     if (this.props.token) {
