@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
-import Routes from './Routes';
+import Routes from '../../Routes';
 import styled from 'styled-components';
-import bgimg from './sfdowntown.jpg';
+import bgimg from '../../sfdowntown.jpg';
 
 const StyledContainer = styled.div`
   height: calc(100vh - 50px);
