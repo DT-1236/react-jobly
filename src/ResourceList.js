@@ -29,15 +29,31 @@ class ResourceList extends Component {
     };
     this.searchResources = this.searchResources.bind(this);
     this.infiniteScroll = this.infiniteScroll.bind(this);
+    this.populateResources = this.populateResources.bind(this);
   }
 
-  async componentDidMount() {
-    const { resourceType } = this.props;
-    const allResources = await JoblyApi.request(`${resourceType}/`);
+  async populateResources(resourceType, displayedSize = this.props.pageSize) {
+    let allResources = await JoblyApi.request(`${resourceType}/`);
+    allResources[resourceType] = allResources[resourceType].map(resource => {
+      resource.identifier = resource.handle || resource.id;
+      return resource;
+    });
     this.setState({
       resources: allResources[resourceType],
-      displayed: allResources[resourceType].slice(0, this.props.pageSize)
+      displayed: allResources[resourceType].slice(0, displayedSize)
     });
+  }
+
+  async infiniteScroll() {
+    if (document.body.scrollHeight - window.innerHeight - window.scrollY < 50) {
+      const length = this.state.displayed.length;
+      const { resourceType, pageSize } = this.props;
+      this.populateResources(resourceType, length + pageSize);
+    }
+  }
+  async componentDidMount() {
+    const { resourceType } = this.props;
+    this.populateResources(resourceType);
     window.addEventListener('scroll', this.infiniteScroll);
   }
 
@@ -50,11 +66,7 @@ class ResourceList extends Component {
     const prevType = prevProps.resourceType;
     const { resourceType } = this.props;
     if (resourceType !== prevType) {
-      const allResources = await JoblyApi.request(`${resourceType}/`);
-      this.setState({
-        resources: allResources[resourceType],
-        displayed: allResources[resourceType].slice(0, this.props.pageSize)
-      });
+      this.populateResources(resourceType);
     }
   }
 
@@ -67,28 +79,12 @@ class ResourceList extends Component {
     this.setState({ resources: apiResponse[resourceType] });
   }
 
-  async infiniteScroll() {
-    if (document.body.scrollHeight - window.innerHeight - window.scrollY < 50) {
-      const length = this.state.displayed.length;
-      const { resourceType } = this.props;
-
-      const allResources = await JoblyApi.request(`${resourceType}/`);
-      this.setState({
-        resources: allResources[resourceType],
-        displayed: allResources[resourceType].slice(
-          0,
-          length + this.props.pageSize
-        )
-      });
-    }
-  }
-
   // Renders the appropriate resource card based off of the resourceType prop
   renderResources() {
     const { resourceType } = this.props;
     return this.state.displayed.map(resource => {
       if (resourceType === 'companies') {
-        return <CompanyCard key={resource.handle} info={resource} />;
+        return <CompanyCard key={resource.identifier} info={resource} />;
       } else if (resourceType === 'jobs') {
         return (
           <JobCard
