@@ -126,7 +126,7 @@ class ResourceCard extends PureComponent {
     }
   };
 
-  static Link = class Link extends PureComponent {
+  static ResourceLink = class ResourceLink extends PureComponent {
     render() {
       return (
         <context.Consumer>
@@ -144,8 +144,9 @@ class ResourceCard extends PureComponent {
     return (
       <context.Provider value={{ isApplied, info, resourceType }}>
         <StyledCard>
-          <ResourceCard.Link>
+          <ResourceCard.ResourceLink>
             <JobTextContainer>
+              <ResourceCard.Title />
               <ResourceCard.Detail>Salary</ResourceCard.Detail>
               <ResourceCard.Detail>Equity</ResourceCard.Detail>
               <ResourceCard.Detail>Company</ResourceCard.Detail>
